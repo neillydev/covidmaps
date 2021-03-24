@@ -1,0 +1,23 @@
+li {
+    list-style-type: none;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+}
+
+.list-item button {
+    background-color: transparent;
+    border: 0px;
+}
+
+.list-item button:hover {
+    background-color: rgb(233, 233, 233);
+}
+
+.list-item button:active {
+    border: 0px;
+    background-color: rgb(233, 233, 233);
+}
