@@ -10,6 +10,7 @@ const CountryList = () => {
 
     return (
         <div className={styles['list-container']}>
+            <SearchBar />
             <CountryCard countryList={countries} />
         </div>
     )
