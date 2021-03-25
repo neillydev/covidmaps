@@ -1,0 +1,12 @@
+.search-container {
+    display: flex;
+    margin: auto;
+    width: 80%;
+    max-width: 200px;
+    background: transparent;
+    height: 20px;
+}
+
+.search-bar {
+    display: flex;
+}
