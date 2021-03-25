@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
 li {
     list-style-type: none;
 }
@@ -5,19 +7,25 @@ li {
 .list-item {
     display: flex;
     flex-direction: column;
-    padding: 5px 0;
+    padding: 2px 0;
 }
 
 .list-item button {
     background-color: transparent;
-    border: 0px;
+    border: none;
 }
 
 .list-item button:hover {
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(238, 238, 238);
 }
 
 .list-item button:active {
-    border: 0px;
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(228, 228, 228);
+}
+
+button {
+    font-size: 16px;
+    font-family: 'Bungee', cursive;
+    text-decoration: none;
+    outline: none;
 }
