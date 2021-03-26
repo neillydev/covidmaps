@@ -7,7 +7,7 @@ li {
 .list-item {
     display: flex;
     flex-direction: column;
-    padding: 2px 0;
+    margin: 5px 0;
 }
 
 .list-item button {
@@ -23,9 +23,14 @@ li {
     background-color: rgb(228, 228, 228);
 }
 
-button {
+.list-btn {
     font-size: 16px;
-    font-family: 'Bungee', cursive;
+    font-family: 'Roboto', sans-serif;
     text-decoration: none;
     outline: none;
+    height: 30px;
+}
+
+.list-btn:active {
+    background-color: rgb(228, 228, 228);
 }

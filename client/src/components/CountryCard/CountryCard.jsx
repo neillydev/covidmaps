@@ -8,7 +8,7 @@ const CountryCard = ({ countryList }) => {
             {countryList.map(value => {
                 return (
                     <span className={styles['list-item']}>
-                        <button>
+                        <button className={styles['list-btn']}>
                             {value}
                         </button>
                     </span>
