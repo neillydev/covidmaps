@@ -1,12 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Roboto&display=swap');
 body {
     background-color: rgb(250, 250, 250);
-    font-family: 'Bungee', cursive;
 }
 
 .container {
 
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    height: 75px;
+    border-bottom: .5px solid rgb(219, 219, 219);
+    margin-bottom: 50px;
+}
+
+.header-corner {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 60px;
 }
 
 .content-container {
@@ -18,15 +31,18 @@ body {
     display: flex;
     justify-content: center;
     align-self: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: large;
+    font-weight: 800;
+    margin: 5px;
 }
 
 .image {
-    width: 150px;
-    margin: auto;
-    margin-top: 50px;
+    width: 50px;
+    margin-left: 20px;
 }
 
-@media (max-width: 770px){
+@media (max-width: 100px){
     .image {
         width: 100%;
     }
