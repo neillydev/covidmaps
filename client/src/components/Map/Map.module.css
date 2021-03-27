@@ -8,7 +8,7 @@
     max-width: 1400px;
     width: 1400px;
     max-height: 800px;
-    height: 700px;
+    height: 625px;
 }
 
 .map-title {
@@ -24,4 +24,5 @@
     background-color: rgb(235, 235, 235);
     width: 100%;
     height: 90%;
+    border-radius: 20px;
 }
