@@ -19,6 +19,7 @@ const App = () => (
             <CountryList />
             <Map />
         </div>
+        <Footer />
     </div>
 )
 
