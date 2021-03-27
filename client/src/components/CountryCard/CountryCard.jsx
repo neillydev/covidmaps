@@ -2,13 +2,14 @@ import React from 'react'
 
 import styles from './CountryCard.module.css'
 
-const CountryCard = ({ countryList }) => {
+const CountryCard = ({ countries, country, handleClick  }) => {
+
     return (
         <nav>
-            {countryList.map(value => {
+            {countries.map(value => {
                 return (
                     <span className={styles['list-item']}>
-                        <button className={styles['list-btn']}>
+                        <button onClick={handleClick} className={country === value ? `${styles['list-btn']} ${styles.selectedBtn}` : styles['list-btn']}>
                             {value}
                         </button>
                     </span>
