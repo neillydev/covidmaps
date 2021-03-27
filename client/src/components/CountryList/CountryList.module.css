@@ -9,3 +9,11 @@
     width: 200px;
     height: 100%;
 }
+
+.list-body {
+    background: transparent;
+    margin: auto;
+    width: inherit;
+    height: 85%;
+    overflow-y: auto;
+}
