@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from 'react'
-
-import styles from './App.module.css'
-
 import CountryList from './components/CountryList/CountryList'
 import Footer from './components/Footer/Footer'
 import Map from './components/Map/Map'
 
+import styles from './App.module.css'
 import logo from './imgs/logo.png'
 
-import { fetchCountries, fetchCountryData } from './api'
+import { fetchCountries, fetchCountryData, fetchCoordinates } from './api'
 
 const App = () => {
     const [country, setCountry] = useState('');
@@ -16,9 +14,14 @@ const App = () => {
     const [cases, setCases] = useState(0);
     const [recoveries, setRecoveries] = useState(0);
     const [deathToll, setDeathToll] = useState(0);
+    const [coordinates, setCoordinates] = useState([]);
 
     const handleClick = (e) => {
         setCountry(e.target.innerText);
+    }
+
+    const onMouseEnter = (e) => {
+
     }
     
     useEffect(() => {
@@ -39,11 +42,34 @@ const App = () => {
                 setCases(confirmed);
                 setRecoveries(recovered);
                 setDeathToll(deaths);
+            }).catch(error=>{
+                console.log(error);
             });
         };
 
         getCaseData();
-    }, [country])
+    }, [country]);
+
+    
+    useEffect(() => {
+        const getCoordinates = async () => {
+            await fetchCoordinates().then(response=>{
+                const { data: allData } = response;
+                let coordinateArray = [];
+                for(const [country, {All: countryData}] of Object.entries(allData)) {
+                    coordinateArray.push({
+                        lat: countryData.lat,
+                        long: countryData.long,
+                    });
+                }
+                setCoordinates(coordinateArray);
+            }).catch(error => {
+    
+            });
+        };
+
+        getCoordinates();
+    }, [coordinates]);
 
 
     return (
@@ -55,7 +81,7 @@ const App = () => {
             </div>
             <div className={styles['content-container']}>
                 <CountryList countries={countries} country={country} handleClick={handleClick} />
-                <Map />
+                <Map onMouseEnter={onMouseEnter} coordinates={coordinates} />
             </div>
             <Footer confirmed={cases} recovered={recoveries} deaths={deathToll} />
         </div>

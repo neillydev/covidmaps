@@ -24,3 +24,13 @@ export const fetchCountryData = async (country) => {
 
     }
 }
+
+export const fetchCoordinates = async () => {
+    try {
+        let coordinates = [];
+        return await axios.get(`${url}`);
+    }
+    catch(error) {
+
+    }
+}
