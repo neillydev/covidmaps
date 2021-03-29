@@ -4,7 +4,7 @@ import Marker from '../Marker/Marker'
 
 import styles from './Map.module.css'
 
-const Map = ({center, zoom}) => {
+const Map = ({center, zoom, onMouseEnter, coordinates}) => {
 
     return (
         <div className={styles['map-container']}>
@@ -18,10 +18,9 @@ const Map = ({center, zoom}) => {
                     defaultZoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    <Marker
-                        lat={70.955413}
-                        lng={30.337844}
-                    />
+                    {coordinates.map(coordinateObj => {
+                        return ((coordinateObj.lat && coordinateObj.long) != undefined  ? <Marker lat={coordinateObj.lat} lng={coordinateObj.long} /> : null)
+                    })}
                 </GoogleMapReact>
       </div>
             </div>
