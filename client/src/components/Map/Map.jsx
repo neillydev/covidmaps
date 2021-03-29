@@ -4,15 +4,7 @@ import Marker from '../Marker/Marker'
 
 import styles from './Map.module.css'
 
-const Map = () => {
-
-    const mapProperties = {
-        center: {
-          lat: 59.95,
-          lng: 30.33
-        },
-        zoom: 11
-    };
+const Map = ({center, zoom}) => {
 
     return (
         <div className={styles['map-container']}>
@@ -20,9 +12,10 @@ const Map = () => {
             <div className={styles['map-body']}>
             <div style={{ height: '100%', width: '100%', borderRadius: '20px' }}>
                 <GoogleMapReact
+                    className={styles['map-object']}
                     bootstrapURLKeys={{ key: 'AIzaSyCvVPgeueqEBqHcGAshCdAKJSdjhr6GFCA' }}
-                    defaultCenter={mapProperties.center}
-                    defaultZoom={mapProperties.zoom}
+                    defaultCenter={center}
+                    defaultZoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
                     <Marker
@@ -35,5 +28,13 @@ const Map = () => {
         </div>
     )
 }
+
+Map.defaultProps = {
+    center: {
+        lat: 38.4265,
+        lng: -115.8756
+    },
+    zoom: 6
+};
 
 export default Map
