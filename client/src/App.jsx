@@ -4,13 +4,14 @@ import Footer from './components/Footer/Footer'
 import Map from './components/Map/Map'
 
 import styles from './App.module.css'
-import logo from './imgs/logo.png'
+import logo from './assets/imgs/logo.png'
 
 import { fetchCountries, fetchCountryData, fetchCoordinates } from './api'
 
 const App = () => {
     const [country, setCountry] = useState('');
     const [countries, setCountries] = useState([]);
+    const [filteredCountries, setFilteredCountries] = useState([]);
     const [cases, setCases] = useState(0);
     const [recoveries, setRecoveries] = useState(0);
     const [deathToll, setDeathToll] = useState(0);
@@ -19,6 +20,28 @@ const App = () => {
     const handleClick = (e) => {
         setCountry(e.target.innerText);
     }
+    const getCountries = async () => {
+        await fetchCountries().then(response =>{
+            const { data: allData } = response;
+            let countryArray = ["Global", "US"];
+            for(const [country] of Object.entries(allData)) {
+                countryArray.push(countryArray.includes(country) ? null : country);
+            }
+            setCountries(countryArray);
+        }).catch(error=>{
+
+        });
+    };
+
+    const handleKeyDown = (e) => {
+        if(e.target.value.length > 0) {
+            console.log(e.target.value)
+            setFilteredCountries(countries.filter(countryName => countryName !== null && countryName.toLowerCase().includes(e.target.value)));
+        }
+        else{
+            setFilteredCountries([]);
+        }
+    }
 
     const onMouseEnter = (e) => {
 
@@ -26,14 +49,12 @@ const App = () => {
     
     useEffect(() => {
         setCountry('Global');
+
+        getCountries();
     }, []);
 
     useEffect(() => {
-        const getCountries = async () => {
-            setCountries(await fetchCountries());
-        };
-
-        getCountries();
+        
     }, [countries]);
 
     useEffect(() => {
@@ -60,6 +81,8 @@ const App = () => {
                     coordinateArray.push({
                         lat: countryData.lat,
                         long: countryData.long,
+                        cases: countryData.confirmed,
+                        country: countryData.country
                     });
                 }
                 setCoordinates(coordinateArray);
@@ -80,10 +103,10 @@ const App = () => {
                 <h1 className={styles.title}>COVID MAPS</h1>
             </div>
             <div className={styles['content-container']}>
-                <CountryList countries={countries} country={country} handleClick={handleClick} />
-                <Map onMouseEnter={onMouseEnter} coordinates={coordinates} />
+                <CountryList countries={filteredCountries.length > 0 ? filteredCountries : countries} country={country} handleClick={handleClick} handleKeyDown={handleKeyDown} />
+                <Map onMouseEnter={onMouseEnter} coordinates={coordinates}/>
             </div>
-            <Footer confirmed={cases} recovered={recoveries} deaths={deathToll} />
+            <Footer cases={cases} recovered={recoveries} deaths={deathToll} />
         </div>
     )
 }
