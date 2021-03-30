@@ -56,7 +56,12 @@ const Map = ({ center, zoom, country }) => {
                     {hovered ? <MapWidget lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null}
                     {coordinates.map(coordinateObj => {
                         let size = sizes[Object.keys(sizes).filter((sizeValue, i) => (sizeValue <= coordinateObj.cases && Object.keys(sizes)[i+1] > coordinateObj.cases ))];
-                        return ((coordinateObj.lat && coordinateObj.long) !== undefined ? <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} handleMouseEnter={(e) => handleMouseEnter({country: coordinateObj.country, lat: `${Number(coordinateObj.lat) + 1.6}`, long: `${Number(coordinateObj.long) + .5}`}, e)} handleMouseLeave={handleMouseLeave} /> : null)
+                        return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
+                        <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} 
+                            handleMouseEnter={(e) => handleMouseEnter({country: coordinateObj.country, lat: `${Number(coordinateObj.lat) + 2}`, long: `${Number(coordinateObj.long) + 1}`}, e)} 
+                            handleMouseLeave={handleMouseLeave} 
+                        /> 
+                        : null)
                     })}
                 </GoogleMapReact>
       </div>
