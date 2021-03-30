@@ -8,7 +8,7 @@ import styles from './Map.module.css';
 
 import { fetchCoordinates } from '../../api'
 
-const Map = ({ center, zoom }) => {
+const Map = ({ center, zoom, country }) => {
     const [hovered, setHovered] = useState(null);
     const [coordinates, setCoordinates] = useState([]);
     const sizes = {
@@ -53,10 +53,10 @@ const Map = ({ center, zoom }) => {
                     defaultZoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    {hovered ? <MapWidget lat={hovered.lat} lng={hovered.long} /> : null}
+                    {hovered ? <MapWidget lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null}
                     {coordinates.map(coordinateObj => {
                         let size = sizes[Object.keys(sizes).filter((sizeValue, i) => (sizeValue <= coordinateObj.cases && Object.keys(sizes)[i+1] > coordinateObj.cases ))];
-                        return ((coordinateObj.lat && coordinateObj.long) !== undefined ? <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} handleMouseEnter={(e) => handleMouseEnter({lat: `${Number(coordinateObj.lat) + 1.6}`, long: `${Number(coordinateObj.long) + .5}`}, e)} handleMouseLeave={handleMouseLeave} /> : null)
+                        return ((coordinateObj.lat && coordinateObj.long) !== undefined ? <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} handleMouseEnter={(e) => handleMouseEnter({country: coordinateObj.country, lat: `${Number(coordinateObj.lat) + 1.6}`, long: `${Number(coordinateObj.long) + .5}`}, e)} handleMouseLeave={handleMouseLeave} /> : null)
                     })}
                 </GoogleMapReact>
       </div>
