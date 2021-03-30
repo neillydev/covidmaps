@@ -1,8 +1,12 @@
 .widget-container {
     display: flex;
+    justify-content: center;
     width: 125px;
     height: 75px;
     background-color: rgb(241, 241, 241);
     border-radius: 20px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+.widget-header {
+    display: flex;
 }
