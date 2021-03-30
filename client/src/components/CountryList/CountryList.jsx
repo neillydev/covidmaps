@@ -1,16 +1,39 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 import styles from './CountryList.module.css'
 
 import CountryCard from '../CountryCard/CountryCard'
 import SearchBar from '../SearchBar/SearchBar'
 
-const CountryList = ({ countries, country, handleClick, handleKeyDown  }) => {
+import { fetchCountries } from '../../api'
+
+const CountryList = ({ country, handleClick }) => {
+    const [countries, setCountries] = useState([]);
+    const [filteredCountries, setFilteredCountries] = useState([]);
+
+    //use onChange for this
+    const handleKeyDown = (e) => {
+        if(e.target.value.length > 0) {
+            console.log(e.target.value)
+            setFilteredCountries(countries.filter(countryName => countryName !== null && countryName.toLowerCase().includes(e.target.value)));
+        }
+        else{
+            setFilteredCountries([]);
+        }
+    }
+
+    useEffect(() => {
+        const getCountries = async () => {
+            setCountries(await fetchCountries());
+        };
+        getCountries();
+    }, []);
+
     return (
         <div className={styles['list-container']}>
             <SearchBar handleKeyDown={handleKeyDown} />
             <div className={styles['list-body']}>
-                <CountryCard countries={countries} country={country} handleClick={handleClick} />
+                <CountryCard country={country} countries={countries} filteredCountries={filteredCountries} handleClick={handleClick} />
             </div>
         </div>
     )

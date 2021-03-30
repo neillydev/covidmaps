@@ -6,8 +6,11 @@ import MapWidget from '../MapWidget/MapWidget';
 
 import styles from './Map.module.css';
 
-const Map = ({ center, zoom, coordinates }) => {
+import { fetchCoordinates } from '../../api'
+
+const Map = ({ center, zoom }) => {
     const [hovered, setHovered] = useState(null);
+    const [coordinates, setCoordinates] = useState([]);
     const sizes = {
         '20': 20,
         '1000': 24,
@@ -30,6 +33,14 @@ const Map = ({ center, zoom, coordinates }) => {
         setHovered(null);
     }
 
+    useEffect(() => {
+        const getCoordinates = async () => {
+            setCoordinates(await fetchCoordinates());
+        };
+
+        getCoordinates();
+    }, [coordinates]);
+    
     return (
         <div className={styles['map-container']}>
             <h3 className={styles['map-title']}>Global Map</h3>
