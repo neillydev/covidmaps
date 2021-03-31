@@ -33,7 +33,7 @@ const CountryList = ({ country, handleClick }) => {
         <div className={styles['list-container']}>
             <SearchBar handleKeyDown={handleKeyDown} />
             <div className={styles['list-body']}>
-                <CountryCard country={country} countries={countries} filteredCountries={filteredCountries} handleClick={handleClick} />
+                <CountryCard country={country} countries={countries} filteredCountries={filteredCountries} handleClick={(e) => handleClick(e.target.innerText)} />
             </div>
         </div>
     )

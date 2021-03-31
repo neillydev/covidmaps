@@ -9,8 +9,8 @@ import logo from './assets/imgs/logo.png'
 const App = () => {
     const [country, setCountry] = useState('');
 
-    const handleClick = (e) => {
-        setCountry(e.target.innerText);
+    const handleClick = (countryName) => {
+        setCountry(countryName);
     }
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const App = () => {
             </div>
             <div className={styles['content-container']}>
                 <CountryList country={country} handleClick={handleClick} />
-                <Map />
+                <Map country={country} handleCountryClick={handleClick} />
             </div>
             <Footer country={country} />
         </div>
