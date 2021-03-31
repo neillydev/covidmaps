@@ -8,7 +8,7 @@ import styles from './Map.module.css';
 
 import { fetchCoordinates } from '../../api'
 
-const Map = ({ country }) => {
+const Map = ({ country, handleCountryClick }) => {
     const [center, setCenter] = useState({
         lat: 38.4265,
         lng: -115.8756
@@ -43,6 +43,7 @@ const Map = ({ country }) => {
             lat: Number(coordinateObj.lat),
             lng: Number(coordinateObj.long)
         });
+        handleCountryClick(coordinateObj.country);
     }
 
     useEffect(() => {
