@@ -8,7 +8,12 @@ import styles from './Map.module.css';
 
 import { fetchCoordinates } from '../../api'
 
-const Map = ({ center, zoom, country }) => {
+const Map = ({ country }) => {
+    const [center, setCenter] = useState({
+        lat: 38.4265,
+        lng: -115.8756
+    });
+    const [zoom, setZoom] = useState(6);
     const [hovered, setHovered] = useState(null);
     const [coordinates, setCoordinates] = useState([]);
     const sizes = {
@@ -33,6 +38,13 @@ const Map = ({ center, zoom, country }) => {
         setHovered(null);
     }
 
+    const handleOnClick = (coordinateObj) => {
+        setCenter({
+            lat: Number(coordinateObj.lat),
+            lng: Number(coordinateObj.long)
+        });
+    }
+
     useEffect(() => {
         const getCoordinates = async () => {
             setCoordinates(await fetchCoordinates());
@@ -40,7 +52,8 @@ const Map = ({ center, zoom, country }) => {
 
         getCoordinates();
     }, [coordinates]);
-    
+
+    //Need to make zooming dynamic with MapWidgets
     return (
         <div className={styles['map-container']}>
             <h3 className={styles['map-title']}>Global Map</h3>
@@ -49,8 +62,8 @@ const Map = ({ center, zoom, country }) => {
                 <GoogleMapReact
                     className={styles['map-object']}
                     bootstrapURLKeys={{ key: 'AIzaSyCvVPgeueqEBqHcGAshCdAKJSdjhr6GFCA' }}
-                    defaultCenter={center}
-                    defaultZoom={zoom}
+                    center={center}
+                    zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
                     {hovered ? <MapWidget lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null}
@@ -59,7 +72,8 @@ const Map = ({ center, zoom, country }) => {
                         return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
                         <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} 
                             handleMouseEnter={(e) => handleMouseEnter({country: coordinateObj.country, lat: `${Number(coordinateObj.lat) + 2}`, long: `${Number(coordinateObj.long) + 1}`}, e)} 
-                            handleMouseLeave={handleMouseLeave} 
+                            handleMouseLeave={handleMouseLeave}
+                            handleOnClick={(e) => handleOnClick(coordinateObj)}
                         /> 
                         : null)
                     })}
@@ -69,13 +83,5 @@ const Map = ({ center, zoom, country }) => {
         </div>
     )
 }
-
-Map.defaultProps = {
-    center: {
-        lat: 38.4265,
-        lng: -115.8756
-    },
-    zoom: 6
-};
 
 export default Map
