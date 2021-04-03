@@ -43,6 +43,8 @@ export const fetchCoordinates = async () => {
                     lat: countryData.lat,
                     long: countryData.long,
                     cases: countryData.confirmed,
+                    recovered: countryData.recovered,
+                    deaths: countryData.deaths,
                     country: countryData.country
                 });
             }
