@@ -16,6 +16,7 @@ const Map = ({ country, handleCountryClick }) => {
     const [zoom, setZoom] = useState(6);
     const [hovered, setHovered] = useState(null);
     const [coordinates, setCoordinates] = useState([]);
+
     const sizes = {
         '20': 20,
         '1000': 24,
@@ -43,6 +44,7 @@ const Map = ({ country, handleCountryClick }) => {
             lat: Number(coordinateObj.lat),
             lng: Number(coordinateObj.long)
         });
+        //Change CountryList scroll position to wherever the country is now set to
         handleCountryClick(coordinateObj.country);
     }
 
@@ -53,6 +55,11 @@ const Map = ({ country, handleCountryClick }) => {
 
         getCoordinates();
     }, [coordinates]);
+
+    useEffect(()=>{
+        //Check if zoom level changed and update widget accordingly if widget is present
+        console.log(zoom)
+    }, [zoom]);
 
     //Need to make zooming dynamic with MapWidgets
     return (
@@ -67,12 +74,20 @@ const Map = ({ country, handleCountryClick }) => {
                     zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    {hovered ? <MapWidget lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null}
+                    {hovered ? <MapWidget lat={hovered.lat} lng={hovered.long} country={hovered.country} cases={hovered.cases} recovered={hovered.recovered} deaths={hovered.deaths} /> : null}
                     {coordinates.map(coordinateObj => {
                         let size = sizes[Object.keys(sizes).filter((sizeValue, i) => (sizeValue <= coordinateObj.cases && Object.keys(sizes)[i+1] > coordinateObj.cases ))];
                         return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
                         <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} 
-                            handleMouseEnter={(e) => handleMouseEnter({country: coordinateObj.country, lat: `${Number(coordinateObj.lat) + 2}`, long: `${Number(coordinateObj.long) + 1}`}, e)} 
+                            handleMouseEnter={(e) => handleMouseEnter({
+                                country: coordinateObj.country, 
+                                cases: coordinateObj.cases, 
+                                recovered: coordinateObj.recovered, 
+                                deaths: coordinateObj.deaths, 
+                                lat: `${Number(coordinateObj.lat) + 2}`, 
+                                long: `${Number(coordinateObj.long) + 1}`}, 
+                                e
+                            )} 
                             handleMouseLeave={handleMouseLeave}
                             handleOnClick={(e) => handleOnClick(coordinateObj)}
                         /> 
