@@ -48,6 +48,13 @@ const Map = ({ country, handleCountryClick }) => {
         handleCountryClick(coordinateObj.country);
     }
 
+    const handleOnChange = (e) => {
+        //Check if zoom level changed and update widget accordingly if widget is present
+        if(e.zoom !== zoom){
+            setZoom(e.zoom);
+        }
+    }
+
     useEffect(() => {
         const getCoordinates = async () => {
             setCoordinates(await fetchCoordinates());
@@ -56,11 +63,6 @@ const Map = ({ country, handleCountryClick }) => {
         getCoordinates();
     }, [coordinates]);
 
-    useEffect(()=>{
-        //Check if zoom level changed and update widget accordingly if widget is present
-        console.log(zoom)
-    }, [zoom]);
-
     //Need to make zooming dynamic with MapWidgets
     return (
         <div className={styles['map-container']}>
@@ -68,6 +70,7 @@ const Map = ({ country, handleCountryClick }) => {
             <div className={styles['map-body']}>
             <div style={{ height: '100%', width: '100%', borderRadius: '20px' }}>
                 <GoogleMapReact
+                    onChange={handleOnChange}
                     className={styles['map-object']}
                     bootstrapURLKeys={{ key: 'AIzaSyCvVPgeueqEBqHcGAshCdAKJSdjhr6GFCA' }}
                     center={center}
@@ -84,8 +87,8 @@ const Map = ({ country, handleCountryClick }) => {
                                 cases: coordinateObj.cases, 
                                 recovered: coordinateObj.recovered, 
                                 deaths: coordinateObj.deaths, 
-                                lat: `${Number(coordinateObj.lat) + 2}`, 
-                                long: `${Number(coordinateObj.long) + 1}`}, 
+                                lat: `${Number(coordinateObj.lat)}`, 
+                                long: `${Number(coordinateObj.long)}`}, 
                                 e
                             )} 
                             handleMouseLeave={handleMouseLeave}
