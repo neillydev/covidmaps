@@ -25,10 +25,21 @@ body {
 
 .header {
     display: flex;
-    flex-direction: row;
     height: 75px;
     border-bottom: .5px solid rgb(219, 219, 219);
     margin-bottom: 50px;
+}
+
+.first {
+    width: 30%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.second {
+    width: 70%;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .header-corner {
