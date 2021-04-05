@@ -3,6 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import Marker from '../Marker/Marker';
 import Coronavirus from '../Icons/Coronavirus';
 import MapWidget from '../MapWidget/MapWidget';
+import MapModal from '../MapModal/MapModal';
 
 import styles from './Map.module.css';
 
@@ -29,6 +30,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
 
     const handleMouseEnter = (coordinateObj, e) => {
         if(e.target.className.baseVal && e.target.className.baseVal.includes('logo')){
+            console.log(coordinateObj)
             setHovered(coordinateObj);
         }
     }
@@ -68,7 +70,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                     zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    {hovered ? <MapWidget lat={hovered.lat} lng={hovered.long} country={hovered.country} cases={hovered.cases} recovered={hovered.recovered} deaths={hovered.deaths} /> : null}
+                    {customCenter ? <MapModal country={country} cases={1} recovered={10} deaths={1} /> : null}
                     {coordinates.map(coordinateObj => {
                         let size = sizes[Object.keys(sizes).filter((sizeValue, i) => (sizeValue <= coordinateObj.cases && Object.keys(sizes)[i+1] > coordinateObj.cases ))];
                         return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
