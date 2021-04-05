@@ -69,7 +69,8 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                     zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    {customCenter ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> : null}
+                    {customCenter ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> 
+                    : hovered ? <MapModal lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null }
                     {coordinates.map(coordinateObj => {
                         let size = sizes[Object.keys(sizes).filter((sizeValue, i) => (sizeValue <= coordinateObj.cases && Object.keys(sizes)[i+1] > coordinateObj.cases ))];
                         return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
