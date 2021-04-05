@@ -6,16 +6,14 @@ import MapWidget from '../MapWidget/MapWidget';
 
 import styles from './Map.module.css';
 
-import { fetchCoordinates } from '../../api'
 
-const Map = ({ country, handleCountryClick }) => {
+const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
     const [center, setCenter] = useState({
         lat: 38.4265,
         lng: -115.8756
     });
     const [zoom, setZoom] = useState(6);
     const [hovered, setHovered] = useState(null);
-    const [coordinates, setCoordinates] = useState([]);
 
     const sizes = {
         '20': 20,
@@ -55,13 +53,6 @@ const Map = ({ country, handleCountryClick }) => {
         }
     }
 
-    useEffect(() => {
-        const getCoordinates = async () => {
-            setCoordinates(await fetchCoordinates());
-        };
-
-        getCoordinates();
-    }, [coordinates]);
 
     //Need to make zooming dynamic with MapWidgets
     return (
@@ -73,7 +64,7 @@ const Map = ({ country, handleCountryClick }) => {
                     onChange={handleOnChange}
                     className={styles['map-object']}
                     bootstrapURLKeys={{ key: 'AIzaSyCvVPgeueqEBqHcGAshCdAKJSdjhr6GFCA' }}
-                    center={center}
+                    center={customCenter ? customCenter : center}
                     zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >

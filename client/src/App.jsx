@@ -7,16 +7,33 @@ import Map from './components/Map/Map'
 import styles from './App.module.css'
 import logo from './assets/imgs/logo.png'
 
+import { fetchCoordinates } from './api'
+
 const App = () => {
     const [country, setCountry] = useState('');
+    const [customCenter, setCustomCenter] = useState(null);
+    const [coordinates, setCoordinates] = useState([]);
 
     const handleClick = (countryName) => {
+        const countryObj = coordinates.filter(coordinateObj => coordinateObj.country === countryName)[0];
         setCountry(countryName);
+        setCustomCenter({
+            lat: Number(countryObj.lat),
+            lng: Number(countryObj.long)
+        });
     }
 
     useEffect(() => {
         setCountry('Global');
     }, []);
+
+    useEffect(() => {
+        const getCoordinates = async () => {
+            setCoordinates(await fetchCoordinates());
+        };
+
+        getCoordinates();
+    }, [coordinates]);
 
     return (
         <div className={styles.container}>
@@ -32,7 +49,7 @@ const App = () => {
             </div>
             <div className={styles['content-container']}>
                 <CountryList country={country} handleClick={handleClick} />
-                <Map country={country} handleCountryClick={handleClick} />
+                <Map coordinates={coordinates} customCenter={customCenter} country={country} handleCountryClick={handleClick} />
             </div>
             <Footer country={country} />
         </div>
