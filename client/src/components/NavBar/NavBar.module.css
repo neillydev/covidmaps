@@ -12,24 +12,23 @@
     outline: none;
     background: transparent;
     border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    border-radius: 40px;
     align-self: center;
+    align-items: center;
     margin: 0 25px;
 }
 
-.git-icon {
-    margin: 30px;
-    align-self: center;
-    font-size: 40px;
-}
 .git-btn:hover {
-    background-color: rgb(238, 238, 238);
+    background-color: rgb(214, 214, 214);
     border-radius: 50px;
+    cursor: pointer;
 }
 
 .git-btn:active {
-    background-color: rgb(228, 228, 228);
+    background-color: rgb(201, 201, 201);
     border-radius: 50px;
+    cursor: pointer;
 }
