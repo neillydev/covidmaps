@@ -17,10 +17,13 @@ const App = () => {
     const handleClick = (countryName) => {
         const countryObj = coordinates.filter(coordinateObj => coordinateObj.country === countryName)[0];
         setCountry(countryName);
-        setCustomCenter({
-            lat: Number(countryObj.lat),
-            lng: Number(countryObj.long)
-        });
+        if(countryObj){
+            setCustomCenter({
+                lat: Number(countryObj.lat),
+                lng: Number(countryObj.long)
+            });
+            setCountry(countryName);
+        }
     }
 
     useEffect(() => {
