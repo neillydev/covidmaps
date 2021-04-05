@@ -30,7 +30,6 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
 
     const handleMouseEnter = (coordinateObj, e) => {
         if(e.target.className.baseVal && e.target.className.baseVal.includes('logo')){
-            console.log(coordinateObj)
             setHovered(coordinateObj);
         }
     }
@@ -70,7 +69,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                     zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    {customCenter ? <MapModal country={country} cases={1} recovered={10} deaths={1} /> : null}
+                    {customCenter ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> : null}
                     {coordinates.map(coordinateObj => {
                         let size = sizes[Object.keys(sizes).filter((sizeValue, i) => (sizeValue <= coordinateObj.cases && Object.keys(sizes)[i+1] > coordinateObj.cases ))];
                         return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
@@ -86,7 +85,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                             )} 
                             handleMouseLeave={handleMouseLeave}
                             handleOnClick={(e) => handleOnClick(coordinateObj)}
-                        /> 
+                        />
                         : null)
                     })}
                 </GoogleMapReact>
