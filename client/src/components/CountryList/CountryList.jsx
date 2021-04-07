@@ -15,7 +15,7 @@ const CountryList = ({ country, handleClick }) => {
     const handleKeyDown = (e) => {
         if(e.target.value.length > 0) {
             console.log(e.target.value)
-            setFilteredCountries(countries.filter(countryName => countryName !== null && countryName.toLowerCase().includes(e.target.value)));
+            setFilteredCountries(countries.filter(countryObj => countryObj['Country'] !== null && countryObj['Country'].toLowerCase().includes(e.target.value)));
         }
         else{
             setFilteredCountries([]);
@@ -24,7 +24,10 @@ const CountryList = ({ country, handleClick }) => {
 
     useEffect(() => {
         const getCountries = async () => {
-            setCountries(await fetchCountries());
+            const countryArray = await fetchCountries();
+            const refinedCountryArray = [];
+            countryArray.map(countryObj => refinedCountryArray.push(countryObj.name));
+            setCountries(refinedCountryArray);
         };
         getCountries();
     }, []);

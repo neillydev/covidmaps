@@ -13,7 +13,7 @@ const Footer = ({ country }) => {
 
     useEffect(() => {
         const getCaseData = async () => {
-            await fetchCountryData(country).then(({data: { All: {confirmed, recovered, deaths} }}) => {
+            await fetchCountryData(country).then(({ confirmed, deaths, recovered }) => {
                 setCases(confirmed);
                 setRecoveries(recovered);
                 setDeathToll(deaths);

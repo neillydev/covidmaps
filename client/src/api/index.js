@@ -1,16 +1,13 @@
 import axios from 'axios';
 
-const url = 'https://covid-api.mmediagroup.fr/v1/cases';
+const url = 'https://corona-api.com/countries';
+var countryCodes = {};
 
 export const fetchCountries = async () => {
     try {
         return await axios.get(url).then((response)=>{
-            const { data: allData } = response;
-            let countryArray = ["Global", "US"];
-            for(const [country] of Object.entries(allData)) {
-                countryArray.push(countryArray.includes(country) ? null : country);
-            }
-            return countryArray;
+            const {data: { data: countries } }  = response;
+            return countries;
         }).catch(error => {
 
         });
@@ -22,11 +19,15 @@ export const fetchCountries = async () => {
 
 export const fetchCountryData = async (country) => {
     try {
-        return await axios.get(`${url}?country=${country}`).then((response)=>{
-            return response;
-        }).catch(error => {
-
-        });
+        if(country != 'Global'){
+            return await axios.get(`${url}/${countryCodes[country.toLowerCase()]}`).then((response)=>{
+                const {data: { data: { latest_data } } } = response;
+                console.log(latest_data)
+                return latest_data;
+            }).catch(error => {
+    
+            });
+        }
     }
     catch(error) {
 
@@ -36,18 +37,22 @@ export const fetchCountryData = async (country) => {
 export const fetchCoordinates = async () => {
     try {
         return await axios.get(url).then((response)=>{
-            const { data: allData } = response;
+            const {data: { data: countries } } = response;
             let coordinateArray = [];
-            for(const [country, {All: countryData}] of Object.entries(allData)) {
+            
+            countries.map(countryObj => {
+                //set all country codes
+                countryCodes[countryObj.name.toLowerCase()] = countryObj.code;
+
                 coordinateArray.push({
-                    lat: countryData.lat,
-                    long: countryData.long,
-                    cases: countryData.confirmed,
-                    recovered: countryData.recovered,
-                    deaths: countryData.deaths,
-                    country: countryData.country
+                    lat: countryObj.coordinates.latitude,
+                    long: countryObj.coordinates.longitude,
+                    cases: countryObj.latest_data.confirmed,
+                    recovered: countryObj.latest_data.recovered,
+                    deaths: countryObj.latest_data.deaths,
+                    country: countryObj.name
                 });
-            }
+            });
             return (coordinateArray);
         }).catch(error => {
 
