@@ -26,7 +26,8 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
         '1000000': 40,
         '2000000': 44,
         '3000000': 48,
-    }
+        '5000000': 52,
+    };
 
     const handleMouseEnter = (coordinateObj, e) => {
         if(e.target.className.baseVal && e.target.className.baseVal.includes('logo')){
@@ -72,7 +73,13 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                     {customCenter ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> 
                     : hovered ? <MapModal lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null }
                     {coordinates.map(coordinateObj => {
-                        let size = sizes[Object.keys(sizes).filter((sizeValue, i) => (sizeValue <= coordinateObj.cases && Object.keys(sizes)[i+1] > coordinateObj.cases ))];
+                        let size = 20;
+                        Object.keys(sizes).map((sizeValue, i) => {
+                                if(sizeValue <= coordinateObj.cases){
+                                    size = sizes[sizeValue];
+                                }
+                            }
+                        )
                         return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
                         <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} 
                             handleMouseEnter={(e) => handleMouseEnter({
