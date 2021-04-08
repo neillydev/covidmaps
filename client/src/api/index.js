@@ -2,6 +2,12 @@ import axios from 'axios';
 
 const url = 'https://corona-api.com/countries';
 var countryCodes = {};
+var customCoordinates = { //custom coordinates for the coordinates that the API does not provide
+    'RU': {
+        latitude: '61.5240',
+        longitude: '105.3188'
+    }
+};
 
 export const fetchCountries = async () => {
     try {
@@ -22,7 +28,6 @@ export const fetchCountryData = async (country) => {
         if(country != 'Global'){
             return await axios.get(`${url}/${countryCodes[country.toLowerCase()]}`).then((response)=>{
                 const {data: { data: { latest_data } } } = response;
-                console.log(latest_data)
                 return latest_data;
             }).catch(error => {
     
@@ -43,13 +48,10 @@ export const fetchCoordinates = async () => {
             countries.map(countryObj => {
                 //set all country codes
                 countryCodes[countryObj.name.toLowerCase()] = countryObj.code;
-
                 coordinateArray.push({
-                    lat: countryObj.coordinates.latitude,
-                    long: countryObj.coordinates.longitude,
+                    lat: customCoordinates[countryObj.code] ? customCoordinates[countryObj.code].latitude : countryObj.coordinates.latitude,
+                    long: customCoordinates[countryObj.code] ? customCoordinates[countryObj.code].longitude : countryObj.coordinates.longitude,
                     cases: countryObj.latest_data.confirmed,
-                    recovered: countryObj.latest_data.recovered,
-                    deaths: countryObj.latest_data.deaths,
                     country: countryObj.name
                 });
             });
