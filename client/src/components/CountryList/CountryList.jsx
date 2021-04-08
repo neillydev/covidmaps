@@ -15,7 +15,7 @@ const CountryList = ({ country, handleClick }) => {
     const handleKeyDown = (e) => {
         if(e.target.value.length > 0) {
             console.log(e.target.value)
-            setFilteredCountries(countries.filter(countryObj => countryObj['Country'] !== null && countryObj['Country'].toLowerCase().includes(e.target.value)));
+            setFilteredCountries(countries.filter(name => name !== null && name.toLowerCase().includes(e.target.value)));
         }
         else{
             setFilteredCountries([]);
