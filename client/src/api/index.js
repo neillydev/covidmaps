@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'https://corona-api.com/countries';
+const url = 'https://corona-api.com/';
 var countryCodes = {};
 var customCoordinates = { //custom coordinates for the coordinates that the API does not provide
     'RU': {
@@ -11,7 +11,7 @@ var customCoordinates = { //custom coordinates for the coordinates that the API 
 
 export const fetchCountries = async () => {
     try {
-        return await axios.get(url).then((response)=>{
+        return await axios.get(`${url}/countries`).then((response)=>{
             const {data: { data: countries } }  = response;
             return countries;
         }).catch(error => {
@@ -25,8 +25,8 @@ export const fetchCountries = async () => {
 
 export const fetchCountryData = async (country) => {
     try {
-        if(country != 'Global'){
-            return await axios.get(`${url}/${countryCodes[country.toLowerCase()]}`).then((response)=>{
+        if(country !== 'Global'){
+            return await axios.get(`${url}/countries/${countryCodes[country.toLowerCase()]}`).then((response)=>{
                 const {data: { data: { latest_data } } } = response;
                 return latest_data;
             }).catch(error => {
@@ -39,9 +39,23 @@ export const fetchCountryData = async (country) => {
     }
 }
 
+export const fetchGlobalData = async () => {
+    try{
+        return await axios.get(`${url}/timeline`).then((response)=>{
+            const {data: { data: latest_data } } = response;
+            return latest_data[0];
+        }).catch(error => {
+
+        });
+    }
+    catch(error){
+
+    }
+}
+
 export const fetchCoordinates = async () => {
     try {
-        return await axios.get(url).then((response)=>{
+        return await axios.get(`${url}/countries`).then((response)=>{
             const {data: { data: countries } } = response;
             let coordinateArray = [];
             
