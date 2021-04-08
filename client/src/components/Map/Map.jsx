@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import GoogleMapReact from 'google-map-react';
 import Coronavirus from '../Icons/Coronavirus';
 import MapModal from '../MapModal/MapModal';
@@ -8,10 +8,10 @@ import styles from './Map.module.css';
 
 const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
     const [center, setCenter] = useState({
-        lat: 38.4265,
-        lng: -115.8756
+        lat: 39.0119,
+        lng: -98.4842
     });
-    const [zoom, setZoom] = useState(6);
+    const [zoom, setZoom] = useState(4);
     const [hovered, setHovered] = useState(null);
 
     const sizes = {
@@ -54,7 +54,6 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
         }
     }
 
-    
     //Need to make zooming dynamic with MapWidgets
     return (
         <div className={styles['map-container']}>
@@ -69,7 +68,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                     zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    {customCenter && (customCenter.lat && customCenter.lng) !== 0 ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> 
+                    {country === 'Global' ? null : customCenter && (customCenter.lat && customCenter.lng) !== 0 ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> 
                     : null}
                     {hovered && (hovered.lat && hovered.lng) !== 0  ? <MapModal lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null }
                     {coordinates.map(coordinateObj => {
