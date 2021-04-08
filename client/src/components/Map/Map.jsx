@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import GoogleMapReact from 'google-map-react';
-import Marker from '../Marker/Marker';
 import Coronavirus from '../Icons/Coronavirus';
-import MapWidget from '../MapWidget/MapWidget';
 import MapModal from '../MapModal/MapModal';
 
 import styles from './Map.module.css';
@@ -40,6 +38,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
     }
 
     const handleOnClick = (coordinateObj) => {
+        setHovered(null);
         setCenter({
             lat: Number(coordinateObj.lat),
             lng: Number(coordinateObj.long)
@@ -71,7 +70,8 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                     yesIWantToUseGoogleMapApiInternals
                 >
                     {customCenter && (customCenter.lat && customCenter.lng) !== 0 ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> 
-                    : hovered && (hovered.lat && hovered.lng) !== 0  ? <MapModal lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null }
+                    : null}
+                    {hovered && (hovered.lat && hovered.lng) !== 0  ? <MapModal lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null }
                     {coordinates.map(coordinateObj => {
                         let size = 20;
                         Object.keys(sizes).map((sizeValue, i) => {
