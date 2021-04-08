@@ -55,7 +55,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
         }
     }
 
-
+    
     //Need to make zooming dynamic with MapWidgets
     return (
         <div className={styles['map-container']}>
@@ -65,13 +65,13 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                 <GoogleMapReact
                     onChange={handleOnChange}
                     className={styles['map-object']}
-                    bootstrapURLKeys={{ key: 'AIzaSyCvVPgeueqEBqHcGAshCdAKJSdjhr6GFCA' }}
-                    center={customCenter ? customCenter : center}
+                    bootstrapURLKeys={{ key: process.env.REACT_APP_KEY}}
+                    center={customCenter ? ((customCenter.lat && customCenter.lng) !== 0 ? customCenter : null) : center}
                     zoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                 >
-                    {customCenter ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> 
-                    : hovered ? <MapModal lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null }
+                    {customCenter && (customCenter.lat && customCenter.lng) !== 0 ? <MapModal lat={customCenter.lat} lng={customCenter.lng} country={country} /> 
+                    : hovered && (hovered.lat && hovered.lng) !== 0  ? <MapModal lat={hovered.lat} lng={hovered.long} country={hovered.country} /> : null }
                     {coordinates.map(coordinateObj => {
                         let size = 20;
                         Object.keys(sizes).map((sizeValue, i) => {
@@ -80,7 +80,7 @@ const Map = ({ coordinates, customCenter, country, handleCountryClick }) => {
                                 }
                             }
                         )
-                        return ((coordinateObj.lat && coordinateObj.long) !== undefined ? 
+                        return ((coordinateObj.lat && coordinateObj.long) !== undefined && (coordinateObj.lat && coordinateObj.long) !== 0 ? 
                         <Coronavirus lat={coordinateObj.lat} lng={coordinateObj.long} width={size} height={size} 
                             handleMouseEnter={(e) => handleMouseEnter({
                                 country: coordinateObj.country, 
