@@ -3,9 +3,25 @@ import axios from 'axios';
 const url = 'https://corona-api.com/';
 var countryCodes = {};
 var customCoordinates = { //custom coordinates for the coordinates that the API does not provide
-    'RU': {
+    'RU': { //russia
         latitude: '61.5240',
         longitude: '105.3188'
+    },
+    'AQ': { //antarctica
+        latitude: '82.8628',
+        longitude: '135.0000'
+    },
+    'TW': { //taiwan
+        latitude: '23.6978',
+        longitude: '120.9605'
+    },
+    'AO': { //angola
+        latitude: '11.2027',
+        longitude: '17.8739'
+    },
+    'AI': { //anguilla
+        latitude: '18.2206',
+        longitude: '63.0686'
     }
 };
 
