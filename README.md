@@ -1,6 +1,6 @@
-CovidMaps
+Covid Maps
 ============
-An interactive map of real-time Covid-19 case data.
+An interactive map of real-time Covid-19 case data built with React JS
 
 The data is sourced from the about-corona.net API (https://about-corona.net/), which facilitates multiple sources for worldwide COVID-19 cases (see below for details).
 
