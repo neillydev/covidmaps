@@ -26,3 +26,8 @@
     height: 90%;
     border-radius: 20px;
 }
+
+.map-object {
+    border: none;
+    outline: none;
+}
