@@ -8,7 +8,7 @@ import SearchBar from '../SearchBar/SearchBar'
 import { fetchCountries } from '../../api'
 
 const CountryList = ({ country, handleClick }) => {
-    const [countries, setCountries] = useState([]);
+    const [countries, setCountries] = useState(['Global']);
     const [filteredCountries, setFilteredCountries] = useState([]);
 
     //use onChange for this
@@ -24,10 +24,11 @@ const CountryList = ({ country, handleClick }) => {
 
     useEffect(() => {
         const getCountries = async () => {
-            const countryArray = await fetchCountries();
-            const refinedCountryArray = [];
-            countryArray.map(countryObj => refinedCountryArray.push(countryObj.name));
-            setCountries(refinedCountryArray);
+            await fetchCountries().then(countryArray => {
+                const refinedCountryArray = [];
+                countryArray.map(countryObj => refinedCountryArray.push(countryObj.name));
+                setCountries(countries.concat(refinedCountryArray));
+            });
         };
         getCountries();
     }, []);
