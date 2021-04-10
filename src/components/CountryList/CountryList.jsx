@@ -10,9 +10,8 @@ import { fetchCountries } from '../../api'
 const CountryList = ({ country, handleClick }) => {
     const [countries, setCountries] = useState(['Global']);
     const [filteredCountries, setFilteredCountries] = useState([]);
-
-    //use onChange for this
-    const handleKeyDown = (e) => {
+    
+    const handleOnChange = (e) => {
         if(e.target.value.length > 0) {
             console.log(e.target.value)
             setFilteredCountries(countries.filter(name => name !== null && name.toLowerCase().includes(e.target.value)));
@@ -35,7 +34,7 @@ const CountryList = ({ country, handleClick }) => {
 
     return (
         <div className={styles['list-container']}>
-            <SearchBar handleKeyDown={handleKeyDown} />
+            <SearchBar handleOnChange={handleOnChange} />
             <div className={styles['list-body']}>
                 <CountryCard country={country} countries={countries} filteredCountries={filteredCountries} handleClick={(e) => handleClick(e.target.innerText)} />
             </div>
