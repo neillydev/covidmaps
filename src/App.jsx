@@ -36,7 +36,7 @@ const App = () => {
         };
 
         getCoordinates();
-    }, [coordinates]);
+    }, []);
 
     return (
         <div className={styles.container}>
