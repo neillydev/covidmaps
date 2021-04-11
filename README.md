@@ -25,6 +25,13 @@ You will be able to open the application at `localhost:3000`
 
 ---
 
+## Data Sources
+
+- World Health Organization Situation Reports (https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports)
+- Johns Hopkins CSSE (https://github.com/CSSEGISandData/COVID-19)
+
+---
+
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
