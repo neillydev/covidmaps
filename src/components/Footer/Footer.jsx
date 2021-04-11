@@ -3,39 +3,33 @@ import CountUp from 'react-countup'
 
 import styles from './Footer.module.css'
 
-import { fetchCountryData, fetchGlobalData } from '../../api'
+import { fetchCountryData } from '../../api'
 
-const Footer = ({ country }) => {
+const Footer = ({ country, globalData }) => {
     const [cases, setCases] = useState(0);
     const [recoveries, setRecoveries] = useState(0);
     const [deathToll, setDeathToll] = useState(0);
 
-    useEffect(() => {
-        const getGlobalData = async () => {
-            await fetchGlobalData().then(({ confirmed, deaths, recovered }) => {
-                setCases(confirmed);
-                setRecoveries(recovered);
-                setDeathToll(deaths);
-            }).catch(error=>{
-                console.log(error);
-            });
-        };
-
-        getGlobalData();
-    }, []);
-
+    const handleCaseData = caseData => {
+        setCases(caseData.confirmed);
+        setRecoveries(caseData.recovered);
+        setDeathToll(caseData.deaths);
+    };
     useEffect(() => {
         const getCaseData = async () => {
             await fetchCountryData(country).then(({ confirmed, deaths, recovered }) => {
-                setCases(confirmed);
-                setRecoveries(recovered);
-                setDeathToll(deaths);
+                handleCaseData({ confirmed, deaths, recovered });
             }).catch(error=>{
                 console.log(error);
             });
         };
 
-        getCaseData();
+        if(globalData){
+            handleCaseData(globalData);
+        }
+        else{
+            getCaseData();
+        }
     }, [country]);
 
     return (
