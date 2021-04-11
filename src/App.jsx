@@ -7,28 +7,43 @@ import Map from './components/Map/Map'
 import styles from './App.module.css'
 import logo from './assets/imgs/logo.png'
 
-import { fetchCoordinates } from './api'
+import { fetchCoordinates, fetchGlobalData } from './api'
 
 const App = () => {
     const [country, setCountry] = useState('');
     const [customCenter, setCustomCenter] = useState(null);
     const [coordinates, setCoordinates] = useState([]);
+    const [globalData, setGlobalData ] = useState({});
 
     const handleClick = (countryName) => {
         const countryObj = coordinates.filter(coordinateObj => coordinateObj.country === countryName)[0];
+            setGlobalData(null);
+
         setCountry(countryName);
         if(countryObj){
             setCustomCenter({
                 lat: Number(countryObj.lat),
                 lng: Number(countryObj.long)
             });
-            setCountry(countryName);
         }
     }
 
     useEffect(() => {
         setCountry('Global');
     }, []);
+
+    useEffect(() => {
+        const getGlobalData = async () => {
+            await fetchGlobalData().then(({ confirmed, deaths, recovered }) => {
+                setGlobalData({confirmed, deaths, recovered});
+            }).catch(error=>{
+                console.log(error);
+            });
+        };
+        if(country === 'Global'){
+            getGlobalData();
+        }
+    }, [country]);
 
     useEffect(() => {
         const getCoordinates = async () => {
@@ -54,7 +69,7 @@ const App = () => {
                 <CountryList country={country} handleClick={handleClick} />
                 <Map coordinates={coordinates} customCenter={customCenter} country={country} handleCountryClick={handleClick} />
             </div>
-            <Footer country={country} />
+            <Footer country={country} globalData={globalData} />
         </div>
     )
 }
