@@ -30,7 +30,7 @@ const Footer = ({ country, globalData }) => {
         else{
             getCaseData();
         }
-    }, [country]);
+    }, [globalData,country]);
 
     return (
         <div className={styles['footer-container']}>
